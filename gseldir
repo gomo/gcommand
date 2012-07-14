@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ -z "$GSELDIR_BASE" ]
+then
+	echo GSELDIR_BASE is empty.
+	exit
+fi
+
+num=1
+for var in `find ${GSELDIR_BASE} -maxdepth 1 -type d | sort | grep .*/[^/.]*[^/]$`
+do
+        LIST[$num]=$var
+        echo $num ${LIST[num]}
+        num=`expr $num + 1`
+done
+
+read NUMBER
+if [ -n "$NUMBER" ]
+then
+	NO_NUMBER=`echo $NUMBER|sed 's/[0-9]//g'`
+	if [ -z "$NO_NUMBER" ]
+	then
+		cd ${LIST[NUMBER]}
+	fi
+fi
